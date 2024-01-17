@@ -21,6 +21,6 @@ public class UserEntity {
     @JoinColumn(name = "last_name")
     private String lastName;
 
-    @Column(name = "ipn", unique = true, nullable = false)
+    @Column(name = "ipn")
     private String ipn;
 }

@@ -1,6 +1,7 @@
 package com.chubaievskyi.service;
 
 import com.chubaievskyi.entity.UserEntity;
+import com.chubaievskyi.mapper.UserMapper;
 import com.chubaievskyi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,14 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
+    private UserMapper userMapper;
 
     public UserEntity createUser(UserEntity user) {
         return userRepository.save(user);
     }
 
-    public UserEntity updateUser(UserEntity user) {
-        return userRepository.save(user);
+    public UserEntity updateUser(UserEntity userEntity) {
+        return userRepository.save(userEntity);
     }
 
     public void deleteUser(Long id) {
