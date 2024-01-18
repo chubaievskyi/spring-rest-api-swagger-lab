@@ -1,6 +1,7 @@
 package com.chubaievskyi.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +18,16 @@ public class SwaggerConfiguration {
 
         return new OpenAPI()
                 .info(new Info()
-                        .title("Spring. Homework No.1.")
+                        .title("Java Dev Tools. Spring. Homework No.1.")
                         .version(version)
                         .description("""
                                         Implement a controller with four http methods.
                                         Implement an individual tax number validator.
                                         Register the API on AWS Elastic BeanStalk.
                                      """)
+                        .contact(new Contact()
+                                .name("Pavlo Chubaievskyi")
+                                .email("chubaievskyi@gmail.com"))
                 );
     }
 }
