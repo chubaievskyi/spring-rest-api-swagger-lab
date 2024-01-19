@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.chubaievskyi</groupId>
     <artifactId>homework7</artifactId>
-    <version>4.0.0</version>
+    <version>5.0.0</version>
     <name>homework7</name>
     <description>homework7</description>
     <properties>
@@ -46,7 +46,6 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.5.5.Final</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

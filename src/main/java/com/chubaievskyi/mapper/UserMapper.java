@@ -3,16 +3,16 @@ package com.chubaievskyi.mapper;
 import com.chubaievskyi.dto.UserDto;
 import com.chubaievskyi.entity.UserEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
-public interface IUserMapper {
+public interface UserMapper {
 
-    IUserMapper MAPPER = Mappers.getMapper(IUserMapper.class);
+    UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
 
+    @Mapping(target = "id", source = "id")
     UserDto entityToDto(UserEntity userEntity);
+
     UserEntity dtoToEntity(UserDto userDto);
-    List<UserDto> entityListToDtoList(List<UserEntity> userEntities);
 }

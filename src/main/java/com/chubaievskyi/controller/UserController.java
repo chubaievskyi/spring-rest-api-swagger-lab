@@ -8,15 +8,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
@@ -30,7 +32,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
-        UserDto updatedUser = userService.updateUser(userDto);
+        UserDto updatedUser = userService.updateUser(id, userDto);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
@@ -50,8 +52,10 @@ public class UserController {
     @ApiResponses(value = @ApiResponse(responseCode = "200", description = "OK",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))))
     @GetMapping
-    public ResponseEntity<List<UserDto>> findAllUsers() {
-        List<UserDto> userDtoList = userService.findAllUsers();
-        return new ResponseEntity<>(userDtoList, HttpStatus.OK);
+    public ResponseEntity<Page<UserDto>> findAllUsers(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
+        Page<UserDto> userDtoPage = userService.findAllUsers(pageable);
+        return new ResponseEntity<>(userDtoPage, HttpStatus.OK);
     }
 }
