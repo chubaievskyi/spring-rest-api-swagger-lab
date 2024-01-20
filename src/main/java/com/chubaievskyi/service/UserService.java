@@ -2,7 +2,7 @@ package com.chubaievskyi.service;
 
 import com.chubaievskyi.dto.UserDto;
 import com.chubaievskyi.entity.UserEntity;
-import com.chubaievskyi.exception.ResourceNotFoundException;
+import com.chubaievskyi.exception.UserNotFoundException;
 import com.chubaievskyi.mapper.UserMapper;
 import com.chubaievskyi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,15 +32,17 @@ public class UserService {
             UserEntity updatedUser = userRepository.save(userEntity);
             return UserMapper.MAPPER.entityToDto(updatedUser);
         } else {
-            throw new ResourceNotFoundException("User not found with ID: " + userDto.getId());
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            throw new UserNotFoundException(id);
         }
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-
-//        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        if (optionalUserEntity.isPresent()) {
+            userRepository.deleteById(id);
+        } else {
+            throw new UserNotFoundException(id);
+        }
     }
 
     public UserDto findUserById(Long id) {
@@ -48,8 +50,7 @@ public class UserService {
         if (optionalUserEntity.isPresent()) {
             return UserMapper.MAPPER.entityToDto(optionalUserEntity.get());
         } else {
-            throw new ResourceNotFoundException("User not found with ID: " + id);
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            throw new UserNotFoundException(id);
         }
     }
 
