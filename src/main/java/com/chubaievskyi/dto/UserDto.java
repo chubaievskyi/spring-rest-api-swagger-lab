@@ -15,22 +15,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDto {
 
-    @Schema(description = "User ID", example = "1234567899", accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(description = "User ID", example = "1", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
+    @Schema(description = "User first name", example = "Rod")
     @NotNull
     @Size(min = 2, max = 100, message = "The first name must contain between 2 and 100 characters")
-    @Pattern(regexp = "^[a-zA-Zа-яА-ЯґҐєЄіІїЇ]*$", message = "This field should contain only Ukrainian or English letters.")
-    @Schema(description = "User first name", example = "Rod")
+    @Pattern(regexp = "^[a-zA-Zа-яА-ЯґҐєЄіІїЇ]*$", message = "First name should contain only Ukrainian or English letters.")
     private String firstName;
 
+    @Schema(description = "User last name", example = "Johnson")
     @NotNull
     @Size(min = 2, max = 100, message = "The last name must contain between 2 and 100 characters")
-    @Pattern(regexp = "^[a-zA-Zа-яА-ЯґҐєЄіІїЇ]*$", message = "This field should contain only Ukrainian or English letters.")
-    @Schema(description = "User last name", example = "Johnson")
+    @Pattern(regexp = "^[a-zA-Zа-яА-ЯґҐєЄіІїЇ]*$", message = "Last name should contain only Ukrainian or English letters.")
     private String lastName;
 
-    @IpnValidation
     @Schema(description = "IPN of the user", example = "1234567899")
+    @NotNull
+    @Pattern(regexp = "\\b\\d{10}\\b", message = "Ipn must consist of 10 digits")
+    @IpnValidation(message = "Ipn failed checksum validation.")
     private String ipn;
 }
