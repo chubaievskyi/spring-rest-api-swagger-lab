@@ -16,8 +16,8 @@ public class SpringApp {
         // TODO: 21.01.2024  Created by: @chubaievskyi - еластікбінсталк
         // TODO: 21.01.2024  Created by: @chubaievskyi - jar/war
         // TODO: 21.01.2024  Created by: @chubaievskyi - тести
-        // TODO: 21.01.2024  Created by: @chubaievskyi - два сервера в свагері
-        // TODO: 21.01.2024  Created by: @chubaievskyi - rds
-        // TODO: 21.01.2024  Created by: @chubaievskyi - повернути всіх користувачів - не актуальне відображення
+        // TODO: 21.01.2024  Created by: @chubaievskyi - замінити сервер в свагері
+        // TODO: 21.01.2024  Created by: @chubaievskyi - воасні проперті
+        // TODO: 22.01.2024  Created by: @chubaievskyi - скопіювати проекти з гітлаб на гітхаб
     }
 }
