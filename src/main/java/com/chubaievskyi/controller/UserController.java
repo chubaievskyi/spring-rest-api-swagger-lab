@@ -1,5 +1,6 @@
 package com.chubaievskyi.controller;
 
+import com.chubaievskyi.dto.PagedResponseDto;
 import com.chubaievskyi.dto.UserDto;
 import com.chubaievskyi.exception.ErrorResponse;
 import com.chubaievskyi.service.UserService;
@@ -73,16 +74,16 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get all users", description = "Returns a list of all users")
+    @Operation(summary = "Get user by ID", description = "Returns user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success. A list of users has been returned.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+            @ApiResponse(responseCode = "200", description = "Success. The user has been returned.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PagedResponseDto.class))),
     })
     @GetMapping
-    public ResponseEntity<Page<UserDto>> findAllUsers(@RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<PagedResponseDto<UserDto>> findAllUsers(@RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
         Page<UserDto> userDtoPage = userService.findAllUsers(pageable);
-        return new ResponseEntity<>(userDtoPage, HttpStatus.OK);
+        PagedResponseDto<UserDto> response = new PagedResponseDto<>(userDtoPage.getContent(), page, userDtoPage.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
