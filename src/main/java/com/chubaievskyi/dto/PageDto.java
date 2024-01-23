@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PagedResponseDto<T> {
+public class PageDto<T> {
 
     @Schema(description = "List of users")
     private List<T> content;
