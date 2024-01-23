@@ -1,10 +1,8 @@
 package com.chubaievskyi.controller;
 
-import com.chubaievskyi.dto.PagedResponse;
+import com.chubaievskyi.dto.PagedResponseDto;
 import com.chubaievskyi.dto.UserDto;
-import com.chubaievskyi.entity.UserEntity;
 import com.chubaievskyi.exception.ErrorResponse;
-import com.chubaievskyi.mapper.UserMapper;
 import com.chubaievskyi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,8 +19,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -80,14 +76,14 @@ public class UserController {
 
     @Operation(summary = "Get user by ID", description = "Returns user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success. The user has been returned.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PagedResponse.class))),
+            @ApiResponse(responseCode = "200", description = "Success. The user has been returned.", content = @Content(mediaType = "application/json", schema = @Schema(implementation = PagedResponseDto.class))),
     })
     @GetMapping
-    public ResponseEntity<PagedResponse<UserDto>> findAllUsers(@RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<PagedResponseDto<UserDto>> findAllUsers(@RequestParam(defaultValue = "0") int page,
+                                                                  @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("firstName").ascending());
         Page<UserDto> userDtoPage = userService.findAllUsers(pageable);
-        PagedResponse<UserDto> response = new PagedResponse<>(userDtoPage.getContent(), page, userDtoPage.getTotalPages());
+        PagedResponseDto<UserDto> response = new PagedResponseDto<>(userDtoPage.getContent(), page, userDtoPage.getTotalPages());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
