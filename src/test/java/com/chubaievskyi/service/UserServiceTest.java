@@ -15,7 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +31,9 @@ class UserServiceTest {
 
     @Mock
     private UserMapper userMapper;
+
+    @Mock
+    private Pageable pageable;
 
     @InjectMocks
     private UserService userService;
@@ -146,17 +151,15 @@ class UserServiceTest {
 
     @Test
     void findAllUsers() {
-        Pageable pageable = mock(Pageable.class);
-        Page<UserEntity> userEntityPage = mock(Page.class);
+
+        List<UserEntity> userEntities = new ArrayList<>();
+        Page<UserEntity> userEntityPage = new PageImpl<>(userEntities);
 
         when(userRepository.findAll(pageable)).thenReturn(userEntityPage);
-        when(userEntityPage.map(any())).thenReturn(new PageImpl<>(Collections.emptyList()));
 
         Page<UserDto> result = userService.findAllUsers(pageable);
 
         verify(userRepository, times(1)).findAll(pageable);
-        verify(userEntityPage, times(1)).map(any());
-
         assertEquals(Collections.emptyList(), result.getContent());
     }
 }

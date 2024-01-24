@@ -2,7 +2,7 @@ package com.chubaievskyi.controller;
 
 import com.chubaievskyi.dto.PageDto;
 import com.chubaievskyi.dto.UserDto;
-import com.chubaievskyi.exception.ErrorResponse;
+import com.chubaievskyi.dto.ErrorResponseDto;
 import com.chubaievskyi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,7 +37,7 @@ public class UserController {
             @ApiResponse(
                     responseCode = "400", description = "Invalid data entered.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)))
+                            schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
@@ -55,11 +55,11 @@ public class UserController {
             @ApiResponse(
                     responseCode = "400", description = "Invalid data entered.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class))),
+                            schema = @Schema(implementation = ErrorResponseDto.class))),
             @ApiResponse(
                     responseCode = "404", description = "User not found.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)))
+                            schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserDto userDto) {
@@ -73,7 +73,7 @@ public class UserController {
             @ApiResponse(
                     responseCode = "400", description = "Invalid data entered.",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)))
+                            schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
@@ -90,7 +90,7 @@ public class UserController {
             @ApiResponse(
                     responseCode = "404", description = "User not found",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)))
+                            schema = @Schema(implementation = ErrorResponseDto.class)))
     })
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> findUserById(@Parameter(description = "User Id") @PathVariable Long id) {
@@ -98,7 +98,7 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get user by ID", description = "Returns user by id")
+    @Operation(summary = "Get all users", description = "Returns user by id")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200", description = "Success. The user has been returned.",

@@ -1,4 +1,4 @@
-package com.chubaievskyi.exception;
+package com.chubaievskyi.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Error Info")
-public class ErrorResponse {
+public class ErrorResponseDto {
 
     @Schema(description = "Date", example = "00:00:00 01.01.2023")
     private String date;
