@@ -46,7 +46,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "Update user.", description = "Update user data.")
+    @Operation(summary = "Update user by ID.", description = "Update user data.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "204", description = "User successfully updated.",
@@ -67,7 +67,7 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @Operation(summary = "Delete user.", description = "Delete user from database.")
+    @Operation(summary = "Delete user by ID.", description = "Delete user from database.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "User successfully deleted.", content = @Content),
             @ApiResponse(
