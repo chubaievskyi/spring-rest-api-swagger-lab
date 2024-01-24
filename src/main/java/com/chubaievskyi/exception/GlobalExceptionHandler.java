@@ -1,5 +1,6 @@
 package com.chubaievskyi.exception;
 
+import com.chubaievskyi.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,31 +17,31 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException e) {
+    public ResponseEntity<ErrorResponseDto> handleUserNotFoundException(UserNotFoundException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")),
                 HttpStatus.NOT_FOUND.value(),
                 "Not found",
                 e.getMessage());
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResponseDto> handleValidationException(MethodArgumentNotValidException e) {
 
         List<String> validationErrors = new ArrayList<>();
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
             validationErrors.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
         }
 
-        ErrorResponse errorResponse = new ErrorResponse(
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto(
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")),
                 HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 validationErrors.toString());
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.BAD_REQUEST);
     }
 }
