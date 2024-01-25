@@ -10,6 +10,10 @@ public class IpnValidator implements ConstraintValidator<IpnValidation, String> 
     @Override
     public boolean isValid(String ipn, ConstraintValidatorContext context) {
 
+        if (ipn == null || !ipn.matches("\\d{10}")) {
+            return false;
+        }
+        
         int sum = 0;
         for (int i = 0; i < ipn.length() - 1; i++) {
             sum += Integer.parseInt(String.valueOf(ipn.charAt(i))) * coefficient[i];
